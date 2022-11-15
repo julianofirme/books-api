@@ -1,4 +1,4 @@
-module books-api
+module github.com/jfirme-sys/books-api
 
 go 1.18
 
