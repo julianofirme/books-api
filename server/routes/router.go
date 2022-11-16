@@ -1,12 +1,15 @@
 package routes
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/jfirme-sys/books-api/controllers"
+	"github.com/gin-gonic/gin"
+)
 
 func ConfigRoutes(router *gin.Engine) *gin.Engine {
 	main := router.Group("api/v1")
 	{
 		books := main.Group("books")
 		{
-			books.GET("/")
+			books.GET("/", controllers.ShowBook)
 		}
 	}
 
