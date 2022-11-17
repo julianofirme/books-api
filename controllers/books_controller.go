@@ -63,7 +63,7 @@ func CreateBook(context *gin.Context) {
 	context.JSON(200, book)
 }
 
-func ShowBooks(context *gin.Context) {
+func ShowAllBooks(context *gin.Context) {
 	db := database.GetDB()
 
 	var books []models.Book
