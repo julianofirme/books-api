@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/jfirme-sys/books-api/migrations"
 	"github.com/jfirme-sys/books-api/util"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -36,6 +37,8 @@ func StartDB() {
 	config.SetConnMaxIdleTime(10)
 	config.SetMaxOpenConns(100)
 	config.SetConnMaxLifetime(time.Hour)
+
+	migrations.RunMigrations(db)
 }
 
 func GetDB() *gorm.DB {
