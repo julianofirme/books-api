@@ -23,7 +23,7 @@ func ShowBook(context *gin.Context) {
 	db := database.GetDB()
 
 	var book models.Book
-	err = db.First(book, integerID).Error
+	err = db.First(&book, integerID).Error
 	if err != nil {
 		context.JSON(400, gin.H{
 			"error": "cannot find book: " + err.Error(),
@@ -78,4 +78,32 @@ func ShowAllBooks(context *gin.Context) {
 	}
 
 	context.JSON(200, books)
+}
+
+func UpdateBook(context *gin.Context) {
+	db := database.GetDB()
+
+	var book models.Book
+
+	err := context.ShouldBindJSON(&book)
+
+	if err != nil {
+		context.JSON(400, gin.H{
+			"error": "cannot bind JSON book: " + err.Error(),
+		})
+
+		return
+	}
+
+	err = db.Save(&book).Error
+
+	if err != nil {
+		context.JSON(400, gin.H{
+			"error": "cannot update book: " + err.Error(),
+		})
+
+		return
+	}
+
+	context.JSON(200, book)
 }
