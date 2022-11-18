@@ -107,3 +107,30 @@ func UpdateBook(context *gin.Context) {
 
 	context.JSON(200, book)
 }
+
+func DeleteBook(context *gin.Context) {
+	id := context.Param("id")
+
+	integerID, err := strconv.Atoi(id)
+	if err != nil {
+		context.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+
+		return
+	}
+
+	db := database.GetDB()
+
+	err = db.Delete(&models.Book{}, integerID).Error
+
+	if err != nil {
+		context.JSON(400, gin.H{
+			"error": "cannot delete book",
+		})
+
+		return
+	}
+
+	context.Status(204)
+}
